@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from home.models import Contact
 from django.contrib import messages
 from blog.models import Post
+from django.contrib.auth.models import User
 # Create your views here.
 def home(request):
 	messages.info(request, 'Welcome to Home Page!')
@@ -25,5 +26,31 @@ def contact(request):
 def search(request):
 	query=request.GET['query']
 	#allposts=Post.objects.all()
-	allposts=Post.objects.filter(title__icontains=query)
-	return render(request,"home/search.html",{'allPosts':allposts})
+	if len(query)>78:
+		allposts=Post.objects.none()
+	else:
+		allpost=Post.objects.filter(title__icontains=query)
+		allpostcontent=Post.objects.filter(content__icontains=query)
+		allposts=allpost.union(allpostcontent)
+	if allposts.count()!= 0:
+		messages.success(request, 'Found')
+	contents={'allPosts':allposts,'query':query}
+	return render(request,"home/search.html",contents)
+
+def handleSignup(request):
+	if request.method=='POST':
+		username=request.POST['username']
+		firstname=request.POST['fname']
+		lastname=request.POST['lname']
+		email=request.POST['email']
+		pass1=request.POST['pass1']
+		pass2=request.POST['pass2']
+		myuser=User.objects.create_user(username,email,pass1)
+		myuser.first_name=firstname
+		myuser.last_name=lastname
+		myuser.save()
+		messages.success(request,"Your account has been created successfully.")
+		return redirect('/')
+	else:
+		messages.error(request,"Please fill the form carefully.")
+		return redirect('/')

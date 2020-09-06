@@ -4,6 +4,17 @@
 {%block body%}
 <div class="container my-3">
 <h2>Search Results: </h2>
+{% if allPosts|length < 1 %}
+	<p>No search results</p>
+	Your search - <b>{{query}} </b>did not match any documents.<br>
+	Sugestions:
+	<ul>
+	<li>Make sure that all words are spelled correctly.</li>
+	<li>Try different keywords.</li>
+	<li>Try more general keywords.</li>
+	</ul>
+Try differents keywords.
+{% endif %}
 {%for post in allPosts%}
 <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">

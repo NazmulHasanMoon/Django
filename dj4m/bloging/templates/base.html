@@ -15,6 +15,7 @@
 {% block head %} {% endblock %}
   </head>
   <body>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">MoonPlanet</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,16 +41,103 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="querys">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+<!-- Button to Signup trigger modal -->
+<button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#signupModals">
+  SignUp
+</button>
+<!-- Button to Login trigger modal -->
+<button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#loginModals">
+  Login
+</button>
   </div>
 </nav>
+
 {%for message in messages%}
 <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-  <strong>Hello!</strong> {{message}}
+  <strong>{{message}}</strong> 
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 {%endfor%}
+
+
+<!--Signup Modal -->
+<div class="modal fade" id="signupModals" tabindex="-1" aria-labelledby="signupModals" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signupTitle">Please Fill the given SignUp Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/signup" method="post">
+	<div class="form-group">
+    <label for="username">User Name</label>
+    <input type="text" class="form-control" id="username" name="username">
+	</div>
+<div class="form-group">
+    <label for="=fname">First Name</label>
+    <input type="text" class="form-control" id="fname" name="fname">
+</div>
+<div class="form-group">
+    <label for="lname">Last Name</label>
+    <input type="text" class="form-control" id="lname" name="lname">
+</div>
+  <div class="form-group">	
+    <label for="Email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="pass1">Password</label>
+    <input type="password" class="form-control" id="pass1" name="pass1">
+  </div>
+<div class="form-group">
+    <label for="pass2">Confirm Password</label>
+    <input type="password" class="form-control" id="pass2" name="pass2">
+  </div>
+{% csrf_token %}
+  <button type="submit" class="btn btn-primary">SignUp</button>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!--Login Modal -->
+<div class="modal fade" id="loginModals" tabindex="-1" aria-labelledby="loginModals" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginTitle">Please Fill the given Login Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+  <div class="form-group">
+    <label for="logeduser">User Name</label>
+    <input type="text" class="form-control" id="logeduser" name="logeduser">
+  </div>
+  <div class="form-group">
+    <label for="pass">Password</label>
+    <input type="password" class="form-control" id="pass" name="pass">
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="Check">
+    <label class="form-check-label" for="Check">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
 {% block body %} {% endblock %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
