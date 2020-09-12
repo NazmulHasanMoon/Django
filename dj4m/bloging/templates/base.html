@@ -37,10 +37,25 @@
         <a class="nav-link" href="/contact">Contact</a>
       </li>
     </ul>
-    <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+<div class="ml-auto form-inline">
+    <form method="get" action="/search" class="my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="querys">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+{% if user.is_authenticated %}
+<ul class="navbar-nav">
+<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{request.user}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+</ul>
+
+{% else %}
 <!-- Button to Signup trigger modal -->
 <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#signupModals">
   SignUp
@@ -49,7 +64,9 @@
 <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#loginModals">
   Login
 </button>
+{% endif %}
   </div>
+</div>
 </nav>
 
 {%for message in messages%}
@@ -67,7 +84,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="signupTitle">Please Fill the given SignUp Form</h5>
+        <h5 class="modal-title" id="signupTitle">Register in MoonPlanet</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -112,7 +129,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="loginTitle">Please Fill the given Login Form</h5>
+        <h5 class="modal-title" id="loginTitle">Login into MoonPlanet</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

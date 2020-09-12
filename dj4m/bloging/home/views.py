@@ -78,6 +78,9 @@ def handleLogin(request):
 			return redirect('/')
 
 def handleLogout(request):
+	#if request.method == 'POST':
+	logout(request)
+	messages.success(request,"Successfully Loged out")
 	return redirect('/')
 
 
