@@ -3,6 +3,7 @@ from home.models import Contact
 from django.contrib import messages
 from blog.models import Post
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate , login , logout
 # Create your views here.
 def home(request):
 	messages.info(request, 'Welcome to Home Page!')
@@ -45,6 +46,14 @@ def handleSignup(request):
 		email=request.POST['email']
 		pass1=request.POST['pass1']
 		pass2=request.POST['pass2']
+		#check for errorneoud inputs
+		if len(username)>10:
+			messages.error(request,'Username must be maximum 10 characters')
+			return redirect('home')
+		if pass1 != pass2:
+			messages.error(request,"Passwords don't match")
+			return redirect('home')
+		#create the user
 		myuser=User.objects.create_user(username,email,pass1)
 		myuser.first_name=firstname
 		myuser.last_name=lastname
@@ -54,3 +63,21 @@ def handleSignup(request):
 	else:
 		messages.error(request,"Please fill the form carefully.")
 		return redirect('/')
+
+def handleLogin(request):
+	if request.method=="POST":
+		loged=request.POST['logeduser']
+		pas =request.POST['pass']
+		user=authenticate(username=loged,password=pas)
+		if user is not None:
+			login(request,user)
+			messages.success(request,"Successfully LogIn")
+			return redirect('/')
+		else:
+			messages.error(request,"Invalid Username or Password")
+			return redirect('/')
+
+def handleLogout(request):
+	return redirect('/')
+
+

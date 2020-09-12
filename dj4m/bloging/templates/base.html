@@ -76,11 +76,11 @@
         <form action="/signup" method="post">
 	<div class="form-group">
     <label for="username">User Name</label>
-    <input type="text" class="form-control" id="username" name="username">
+    <input type="text" class="form-control" id="username" name="username" required>
 	</div>
 <div class="form-group">
     <label for="=fname">First Name</label>
-    <input type="text" class="form-control" id="fname" name="fname">
+    <input type="text" class="form-control" id="fname" name="fname" required>
 </div>
 <div class="form-group">
     <label for="lname">Last Name</label>
@@ -88,16 +88,16 @@
 </div>
   <div class="form-group">	
     <label for="Email">Email address</label>
-    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div class="form-group">
     <label for="pass1">Password</label>
-    <input type="password" class="form-control" id="pass1" name="pass1">
+    <input type="password" class="form-control" id="pass1" name="pass1" required>
   </div>
 <div class="form-group">
     <label for="pass2">Confirm Password</label>
-    <input type="password" class="form-control" id="pass2" name="pass2">
+    <input type="password" class="form-control" id="pass2" name="pass2" required>
   </div>
 {% csrf_token %}
   <button type="submit" class="btn btn-primary">SignUp</button>
@@ -118,18 +118,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/login" method="post">
+	{% csrf_token %}
   <div class="form-group">
     <label for="logeduser">User Name</label>
-    <input type="text" class="form-control" id="logeduser" name="logeduser">
+    <input type="text" class="form-control" id="logeduser" name="logeduser" required>
   </div>
+
   <div class="form-group">
     <label for="pass">Password</label>
-    <input type="password" class="form-control" id="pass" name="pass">
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="Check">
-    <label class="form-check-label" for="Check">Check me out</label>
+    <input type="password" class="form-control" id="pass" name="pass" required>
   </div>
   <button type="submit" class="btn btn-primary">Login</button>
 </form>
