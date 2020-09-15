@@ -1,11 +1,37 @@
 {%extends 'base.html'%}
 {%block title%}Blog Post{%endblock%}
 {%block body%}
+{% load humanize %}
 <div class="container">
 	<h2 class="blog-post-title">{{mypost.title}} by {{mypost.author}}</h2>
-	<p class="blog-post-meta">{{mypost.timeStamp}}</p>
+	<p class="blog-post-meta">{{mypost.timeStamp | naturaltime}}</p>
 	<p>{{mypost.content}}</p>
 	<hr>
 	
+</div>
+<div class="container">
+	<h2>Comments</h2>
+	{%if user.is_authenticated%}
+	<form action="/blog/postComment" method="post">
+	{%csrf_token%}
+	<div class="form-group">
+	<input type="text" class="form-control" name="comment" placeholder="Enter your Comments here">
+	</div>
+	<input type="hidden" name="postSno" value="{{mypost.sno}}">
+	<button type="submit" class="btn-btn-primary">Submit</button>
+	</from>
+	{%else%}
+	<h3>Please Login inorder to comment here</h3>
+	{%endif%}
+	{% for cmnt in comments %}
+	<div class="row my-3">
+		<div class="col-md-1">
+			<img class="rounded mx-auto d-block w-100 p-2" src="/static/img/avatar.jpg" alt="user">
+		</div>
+		<div class="col-md-11"><b>{{cmnt.user.username}} </b> <sub>at {{cmnt.timestamp}}</sub>	
+			<div>{{cmnt.comment}}</div>
+		</div>
+	</div>
+	{% endfor %}
 </div>
 {%endblock%}
