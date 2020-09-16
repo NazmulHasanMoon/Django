@@ -4,7 +4,7 @@
 {% load humanize %}
 <div class="container">
 	<h2 class="blog-post-title">{{mypost.title}} by {{mypost.author}}</h2>
-	<p class="blog-post-meta">{{mypost.timeStamp | naturaltime}}</p>
+	<p class="blog-post-meta">{{mypost.timeStamp}}</p>
 	<p>{{mypost.content}}</p>
 	<hr>
 	
@@ -28,8 +28,14 @@
 		<div class="col-md-1">
 			<img class="rounded mx-auto d-block w-100 p-2" src="/static/img/avatar.jpg" alt="user">
 		</div>
-		<div class="col-md-11"><b>{{cmnt.user.username}} </b> <sub>at {{cmnt.timestamp}}</sub>	
+		<div class="col-md-11"><b>{{cmnt.user.username}} </b> <sub class="badge badge-secondary"> {{cmnt.timestamp | naturaltime}}</sub>	
 			<div>{{cmnt.comment}}</div>
+			<div class="reply mx-0">
+				<button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#replyBox{{cmnt.sno}}"  aria-expanded="false" aria-controls="replyBox{{cmnt.sno}}">Reply</button>
+				<div class="collapse" id="replyBox{{cmnt.sno}}">
+					<div class="card card-body my-2">What you wanna say</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	{% endfor %}
