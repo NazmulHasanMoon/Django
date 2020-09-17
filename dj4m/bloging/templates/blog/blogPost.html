@@ -2,6 +2,7 @@
 {%block title%}Blog Post{%endblock%}
 {%block body%}
 {% load humanize %}
+{% load task %}
 <div class="container">
 	<h2 class="blog-post-title">{{mypost.title}} by {{mypost.author}}</h2>
 	<p class="blog-post-meta">{{mypost.timeStamp}}</p>
@@ -18,8 +19,9 @@
 	<input type="text" class="form-control" name="comment" placeholder="Enter your Comments here">
 	</div>
 	<input type="hidden" name="postSno" value="{{mypost.sno}}">
-	<button type="submit" class="btn-btn-primary">Submit</button>
-	</from>
+	<input type="hidden" name="parentSno" value="">
+	<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
 	{%else%}
 	<h3>Please Login inorder to comment here</h3>
 	{%endif%}
@@ -33,7 +35,23 @@
 			<div class="reply mx-0">
 				<button class="btn btn-sm btn-primary" type="button" data-toggle="collapse" data-target="#replyBox{{cmnt.sno}}"  aria-expanded="false" aria-controls="replyBox{{cmnt.sno}}">Reply</button>
 				<div class="collapse" id="replyBox{{cmnt.sno}}">
-					<div class="card card-body my-2">What you wanna say</div>
+					<div class="card card-body my-2">	
+					<form action="/blog/postComment" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+						<input type="text" class="form-control" name="comment" placeholder="Enter your Reply for this comment">
+						<input type="hidden" name="parentSno" value="{{cmnt.sno}}">
+						</div>
+						<input type="hidden" name="postSno" value="{{mypost.sno}}">
+						
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+					</div>
+				</div>
+				<div class="replies bg-danger my-2">
+					{% for reply in replyDict|get_val:cmnt.sno %}
+						{{reply}}
+					{% endfor %}
 				</div>
 			</div>
 		</div>
