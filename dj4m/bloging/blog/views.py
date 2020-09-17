@@ -13,11 +13,11 @@ def blogPost(request, slug):
 	replies=BlogComment.objects.filter(post=post).exclude(parent=None)
 	repdic={}
 	for reply in replies:
-		if reply.sno not in repdic.keys():
+		if reply.parent.sno not in repdic.keys():
 			repdic[reply.parent.sno] = [reply]
 		else:
 			repdic[reply.parent.sno].append(reply)
-	print(repdic)
+	print(len(repdic))
 	context={'mypost':post,'comments':comments,'user':request.user, 'replyDict':repdic}
 	return render(request,'blog/blogPost.html',context)
 
