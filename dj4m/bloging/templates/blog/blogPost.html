@@ -6,7 +6,7 @@
 <div class="container">
 	<h2 class="blog-post-title">{{mypost.title}} by {{mypost.author}}</h2>
 	<p class="blog-post-meta">{{mypost.timeStamp}}</p>
-	<p>{{mypost.content}}</p>
+	<p>{{mypost.content|safe}}</p>
 	<hr>
 	
 </div>
