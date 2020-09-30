@@ -1,0 +1,7 @@
+{%extends 'base.html'%}
+{% block title %}Home!{% endblock %}
+{% block body %}
+<h3>{{request.user}}</h3>
+<p>Authentication: {{request.user.is_authenticated}}</p>
+<p>This is a templates</p>
+{% endblock %}
