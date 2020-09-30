@@ -3,4 +3,18 @@
 {% block body %}
 <h1>Hello World</h1>
 <p>This is contact page</p>
+<p>{{Name}},{{Edu}}</p>
+<ul>
+	<li>
+		Item 1
+	</li>
+	<li>
+		Item 2
+	</li>
+</ul>
+<ul>
+{% for sub_item in Edu %}
+	<li>{{forloop.counter}}:- {{sub_item}} </li>
+{% endfor %}
+</ul>
 {% endblock %}
