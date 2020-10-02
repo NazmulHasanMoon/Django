@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404, redirect
 
 # Create your views here.
 from .models import Product
@@ -19,17 +19,18 @@ from .forms import ProductForm, RawProductFrom
 #	return render(request,'products/product_create.html',context)
 
 def product_create_view(request):
-	form=ProductForm(request.POST or None)
+	obj=Product.objects.get(id=1)
+	form=ProductForm(request.POST or None,instance=obj)
 	if form.is_valid():
 		form.save()
-		form=ProductForm()
+		
 	context={
 		"form":form
 	}
 	return render(request,'products/product_create.html',context)
 
-def product_detail_view(request):
-	obj=Product.objects.get(id=1)
+def product_detail_view(request,my_id):
+	obj=Product.objects.get(id=my_id)
 	#context={
 	#	"title": obj.title,
 	#	"description" : obj.description,
@@ -39,3 +40,13 @@ def product_detail_view(request):
 		"object":obj
 	}
 	return render(request,'product/detail.html',context)
+
+def product_delete_view(request, id):
+	obj = get_object_or_404(Product, id=id)
+	if request.method == "POST":
+		obj.delete()
+		return redirect('../../')
+	context = {
+        "object": obj
+	}
+	return render(request, "products/product_delete.html", context)
