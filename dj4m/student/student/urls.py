@@ -1,4 +1,4 @@
-"""trydjango URL Configuration
+"""student URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -14,16 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
-from pages.views import home_view,about_view,contact_view,social_view
+from django.urls import path
 
 urlpatterns = [
-    path('products/', include('products.urls')),
-    path('blog/',include('blog.urls')),
-    path('courses/',include('courses.urls')),
-	path('', home_view, name='home'),
-	path('about/', about_view),
-	path('contact/', contact_view),
-	path('social/', social_view),
     path('admin/', admin.site.urls),
 ]

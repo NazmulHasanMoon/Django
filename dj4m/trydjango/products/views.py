@@ -19,7 +19,17 @@ from .forms import ProductForm, RawProductFrom
 #	return render(request,'products/product_create.html',context)
 
 def product_create_view(request):
-	obj=Product.objects.get(id=1)
+	form = ProductForm(request.POST or None)
+	if form.is_valid():
+		form.save()
+		form = ProductForm()
+	context = {
+        'form': form
+	}
+	return render(request, "products/product_create.html", context)
+
+def product_update_view(request,id):
+	obj=Product.objects.get(id=id)
 	form=ProductForm(request.POST or None,instance=obj)
 	if form.is_valid():
 		form.save()
@@ -29,8 +39,8 @@ def product_create_view(request):
 	}
 	return render(request,'products/product_create.html',context)
 
-def product_detail_view(request,my_id):
-	obj=Product.objects.get(id=my_id)
+def product_detail_view(request,id):
+	obj=Product.objects.get(id=id)
 	#context={
 	#	"title": obj.title,
 	#	"description" : obj.description,
@@ -50,3 +60,10 @@ def product_delete_view(request, id):
         "object": obj
 	}
 	return render(request, "products/product_delete.html", context)
+
+def product_list_view(request):
+	queryset = Product.objects.all() # list of objects
+	context = {
+        "object_list": queryset
+	}
+	return render(request, "products/product_list.html", context)
